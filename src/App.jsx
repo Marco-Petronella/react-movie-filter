@@ -5,6 +5,10 @@ import filmsList from "./data/data";
 function App() {
   const originalList = filmsList;
   const [films, setFilms] = useState([]);
+  const [addFilm, setAddFilm] = useState({
+    title: "",
+    genre: "",
+  });
 
   useEffect(() => {
     setFilms(filmsList)
@@ -30,15 +34,19 @@ function App() {
       setFilms(originalList)
       }
   }
-    function handleAddFilm() {
-    const selectedFilter = document.getElementById("filterTitle").value;
-    if (selectedFilter != "ALL") { 
-      const filteredFilms = originalList.filter((film) => film.title.toLowerCase().includes(selectedFilter.toLowerCase()))
-      setFilms(filteredFilms) 
-    }
-      else {
-      setFilms(originalList)
-      }
+    function handleAddFilm(e) {
+      e.preventDefault()
+    console.log(e.target.value);
+    originalList.push(addFilm);
+    setFilms(originalList)
+  }
+  function handleSetNewFilm(e) {
+    setAddFilm({
+      ...addFilm,
+      [e.target.name]: e.target.value,
+  });
+  console.log(addFilm);
+  
   }
   
   
@@ -55,9 +63,14 @@ function App() {
     
     <form className="m-2 p-2" onSubmit={handleAddFilm}>
 
-      <p>titolo <input type="text" defaultValue={""} />
+      <p>titolo <input 
+      type="text" 
+      name="title"
+      onChange={handleSetNewFilm}
+      placeholder="Inserisci Titolo" />
 
-      <span> genere: </span><select onChange={handleGenreFilter} className="m-2" name="" id="genre">
+      <span> genere: </span>
+      <select onChange={handleSetNewFilm} className="m-2" name="genre">
       <option value="Fantascienza">Fantascienza</option>
       <option value="Thriller">Thriller</option>
       <option value="Romantico">Romantico</option>
