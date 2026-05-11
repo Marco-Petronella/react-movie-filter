@@ -10,8 +10,8 @@ function App() {
     setFilms(filmsList)
   }, [])
 
-  function handleGenreFilter() {
-    const selectedFilter = document.getElementById("filterGenre").value;
+  function handleGenreFilter(e) {
+    const selectedFilter = e.target.value;
     if (selectedFilter != "ALL") { 
       const filteredFilms = originalList.filter((film) => film.genre == selectedFilter)
       setFilms(filteredFilms) 
@@ -20,7 +20,17 @@ function App() {
       setFilms(originalList)
       }
   }
-    function handleTitleFilter() {
+    function handleTitleFilter(e) {
+    const selectedFilter = e.target.value
+    if (selectedFilter != "ALL") { 
+      const filteredFilms = originalList.filter((film) => film.title.toLowerCase().includes(selectedFilter.toLowerCase()))
+      setFilms(filteredFilms) 
+    }
+      else {
+      setFilms(originalList)
+      }
+  }
+    function handleAddFilm() {
     const selectedFilter = document.getElementById("filterTitle").value;
     if (selectedFilter != "ALL") { 
       const filteredFilms = originalList.filter((film) => film.title.toLowerCase().includes(selectedFilter.toLowerCase()))
@@ -30,6 +40,7 @@ function App() {
       setFilms(originalList)
       }
   }
+  
   
   return (
     <>
@@ -41,7 +52,20 @@ function App() {
       <option value="Azione">Azione</option>
     </select>
     <p className="m-2">Ricerca film per titolo: <input onChange={handleTitleFilter} className="m-2" name="" id="filterTitle"></input></p>
+    
+    <form className="m-2 p-2" onSubmit={handleAddFilm}>
 
+      <p>titolo <input type="text" defaultValue={""} />
+
+      <span> genere: </span><select onChange={handleGenreFilter} className="m-2" name="" id="genre">
+      <option value="Fantascienza">Fantascienza</option>
+      <option value="Thriller">Thriller</option>
+      <option value="Romantico">Romantico</option>
+      <option value="Azione">Azione</option> </select>
+
+      <button type="submit" className="btn btn-primary"> Aggiungi </button>
+      </p>
+    </form>
     <ul>
     {films.map(film => (
       <li key={film.title}>{film.title} , {film.genre}</li>
