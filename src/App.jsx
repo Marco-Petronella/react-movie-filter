@@ -17,12 +17,21 @@ Creare un sistema per aggiungere nuovi film alla lista tramite un form.
 */
 function App() {
 
-
+  function handleFilter() {
+    console.log("hanno selezionato qualcosa:" + document.getElementById("filter").value);
+  }
   return (
     <>
+    <span className="m-2">filtra per: </span><select onInput={handleFilter} className="m-2" name="" id="filter">
+      <option value="">Tutti i film</option>
+      <option value="Fantascienza">Fantascienza</option>
+      <option value="Thriller">Thriller</option>
+      <option value="Romantico">Romantico</option>
+      <option value="Azione">Azione</option>
+    </select>
     <ul>
     {films.map(film => (
-      <li>{film.title} , {film.genre}</li>
+      <li key={film.title}>{film.title} , {film.genre}</li>
     ))}
     </ul>
     </>
