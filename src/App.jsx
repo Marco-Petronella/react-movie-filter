@@ -12,13 +12,19 @@ function App() {
 
   function handleFilter() {
     const selectedFilter = document.getElementById("filter").value;
-    const filteredFilms = originalList.filter((film) => film.genre == selectedFilter)
-    setFilms(filteredFilms)
+    if (selectedFilter != "ALL") { 
+      const filteredFilms = originalList.filter((film) => film.genre == selectedFilter)
+      setFilms(filteredFilms) 
+    }
+      else {
+      setFilms(originalList)
+      }
   }
+  
   return (
     <>
     <span className="m-2">filtra per: </span><select onChange={handleFilter} className="m-2" name="" id="filter">
-      <option value="">Tutti i film</option>
+      <option value="ALL">Tutti i film</option>
       <option value="Fantascienza">Fantascienza</option>
       <option value="Thriller">Thriller</option>
       <option value="Romantico">Romantico</option>
